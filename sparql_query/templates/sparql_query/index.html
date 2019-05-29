@@ -61,17 +61,7 @@ function on_click () {
 
 
 
-<form>
-<!-- <div class="ui dropdown">
-  <input type="hidden" name="gender">
-  <i class="dropdown icon"></i>
-  <div class="default text">Gender</div>
-  <div class="menu">
-    <div class="item" data-value="male">Male</div>
-    <div class="item" data-value="female">Female</div>
-  </div>
-</div> -->
-
+<form method="get">
 <br>
 Enter City:  
 <input type="text" id="City_ID" name="City">
@@ -82,11 +72,8 @@ Enter Runway Surface Type:
 Enter Aircraft Model:  
 <input type="text" id="AircraftModel_ID" name="Aircraft_model">
 <br><br>
-<!-- <button onclick="query_make()" name="my_btn"> GENERATE </button> -->
- <input type="button" class="btn" value="GENERATE" name="my_btn" onclick="on_click()">
-<!-- <button name="my-btn" id="my-btn">sort</button> -->
+<input type="submit" value="GENERATE" name="my_btn">
 </form>
-<!-- <p id="query">{{stringg}}</p> -->
-<p id="query">hhh</p>
+<p id="query">{{stringg}}</p>
 </body>
 </html>

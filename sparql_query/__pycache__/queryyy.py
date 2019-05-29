@@ -34,6 +34,7 @@ def make_query (print_variable, city, country, RunwaySurface, Aircraftmodel, age
 	Sparql_Query = Prefix_1 + " " + Prefix_2 + " " + Sparql_Query
 
 	print (Sparql_Query)
+	return Sparql_Query
 
 
-make_query ("accident", "miami", "hh", "concrete", "1825", "30")
+# make_query ("accident", "miami", "hh", "concrete", "1825", "30")
