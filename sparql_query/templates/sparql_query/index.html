@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+
+
+
+<body>
+
+
+<script>
+function query_make() {
+	var City_var = document.getElementById("City_ID").value;
+	var RunSur_var = document.getElementById("RunSur_ID").value;
+	var AircraftModel_var = document.getElementById("AircraftModel_ID").value;
+
+
+	Prefix_1 = "PREFIX aircraftaccident: &lt;https://www.cse.iitb.ac.in/~amitpatil/AircraftAccident.owl#&gt; "
+	Prefix_2 = "PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; "
+
+	Sparql_Query = "SELECT ?accident" + " WHERE { "
+
+	if (City_var != "")
+	{
+			Sparql_Query = Sparql_Query + "?accident aircraftaccident:occurredAtCity aircraftaccident:" + City_var + " . "
+	}
+
+	if (RunSur_var != "")
+	{
+			Sparql_Query = Sparql_Query + "?accident aircraftaccident:hasRunwaySurfaceType aircraftaccident:" + RunSur_var + " . "
+
+	}
+
+	if (AircraftModel_var != "")
+	{
+			Sparql_Query = Sparql_Query + "?accident aircraftaccident:hasAircraftModel aircraftaccident:" + AircraftModel_var + " . "
+	}
+
+
+Sparql_Query = Sparql_Query + " } "
+Sparql_Query = Prefix_1 + " " + Prefix_2 + " " + Sparql_Query
+
+	// var total = City_var.value + RunSur_var.value + AircraftModel_var.value;
+	document.getElementById("query").innerHTML = Sparql_Query;
+}
+
+
+$('.ui.dropdown')
+  .dropdown()
+;
+
+function on_click () {
+	       city_data = JSON.parse(document.getElementById("City_ID").value.replace(/'/g, '"'));
+	       document.getElementById("query").innerHTML = "city_data"
+}
+</script>
+
+
+
+<h2>kNOWLEDGE GRAPH</h2>
+
+
+
+
+<form>
+<!-- <div class="ui dropdown">
+  <input type="hidden" name="gender">
+  <i class="dropdown icon"></i>
+  <div class="default text">Gender</div>
+  <div class="menu">
+    <div class="item" data-value="male">Male</div>
+    <div class="item" data-value="female">Female</div>
+  </div>
+</div> -->
+
+<br>
+Enter City:  
+<input type="text" id="City_ID" name="City">
+<br>
+Enter Runway Surface Type:  
+<input type="text" id="RunSur_ID" name="Runway_SUrface">
+<br>
+Enter Aircraft Model:  
+<input type="text" id="AircraftModel_ID" name="Aircraft_model">
+<br><br>
+<!-- <button onclick="query_make()" name="my_btn"> GENERATE </button> -->
+ <input type="button" class="btn" value="GENERATE" name="my_btn" onclick="on_click()">
+<!-- <button name="my-btn" id="my-btn">sort</button> -->
+</form>
+<!-- <p id="query">{{stringg}}</p> -->
+<p id="query">hhh</p>
+</body>
+</html>
