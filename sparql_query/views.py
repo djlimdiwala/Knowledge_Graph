@@ -1,6 +1,7 @@
 from . queryyy import make_query
-
+from django.utils.safestring import mark_safe
 from django.shortcuts import render
+import json
 
 def index(request):
 
@@ -13,4 +14,5 @@ def index(request):
 		Aircraftmodel = request.GET.get('Aircraft_model')
 		agee = "30"
 		stringg = make_query(output_variable, city, country, RunwaySurface, Aircraftmodel, agee)
-	return render(request, "sparql_query/index.html", {'stringg' : stringg})
+
+	return render(request, "sparql_query/index.html", {'stringg_abc' : mark_safe(stringg)})

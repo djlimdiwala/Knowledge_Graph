@@ -1,79 +1,128 @@
 <!DOCTYPE html>
 <html>
+<head>
+	<style>
+div {   
+        width: 50%;
+        margin-left : 25%
+    } 
+
+<style>
+* {
+  box-sizing: border-box;
+}
 
 
+body {
+  
+}
+body {
+	 font: 16px Arial; 
+    /*background: white url("bg.jpg") no-repeat;*/
+    background-image:url('{{ STATIC_URL }}bg.jpg');
+background-repeat:no-repeat;
+    background-size:100%;
+}
+
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+
+input[type=submit] {
+  background-color: DodgerBlue;
+  color: #fff;
+  cursor: pointer;
+}
+
+</style>
+
+	</style>
+</head>
+<body id="bg">
+<div>
+<h2>KNOWLEDGE GRAPH</h2>
+<form method="get" autocomplete="on">
+<br>
+<table>
+	<tr>
+		<div class="autocomplete" style="width:300px;">
+		<td>Enter City: </td>  
+		<td> <input type="text" id="City_ID" name="City" placeholder="City"> </td></div>
+	</tr>
+	<tr>
+		<td>Enter Runway Surface Type: </td>  
+		<td><input type="text" id="RunSur_ID" name="Runway_SUrface"></td>
+	</tr>
+	<tr>
+		<td>Enter Aircraft Model: </td>  
+		<td><input type="text" id="AircraftModel_ID" name="Aircraft_model"></td>
+	</tr>
+</table>
+<input type="submit" value="GENERATE" name="my_btn">
+</form>
+
+<p id="query" visibility= "hidden">{{stringg_abc}}</p>
 
 
-<body>
+<p id="resultTable">{{results}}</p>
 
+<!-- <script>
+var fruits, text, fLen, i;
+fruits = ["Banana", "Orange", "Apple", "Mango"];
+fLen = fruits.length;
+
+text = "<ul>";
+for (i = 0; i < fLen; i++) {
+  text += "<li>" + fruits[i] + "</li>";
+}
+text += "</ul>";
+
+document.getElementById("result_values").innerHTML = text;
+</script> -->
+
+</div>
 
 <script>
-function query_make() {
-	var City_var = document.getElementById("City_ID").value;
-	var RunSur_var = document.getElementById("RunSur_ID").value;
-	var AircraftModel_var = document.getElementById("AircraftModel_ID").value;
+function generateTable(){
+	// result = stringg_abc.results.bindings;
 
+	// alert(document.getElementById("query").innerHTML.toString())
 
-	Prefix_1 = "PREFIX aircraftaccident: &lt;https://www.cse.iitb.ac.in/~amitpatil/AircraftAccident.owl#&gt; "
-	Prefix_2 = "PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; "
+	result = document.getElementById("query").innerHTML;
+	result = JSON.parse(result.replace(/'/g,'"'));
 
-	Sparql_Query = "SELECT ?accident" + " WHERE { "
-
-	if (City_var != "")
-	{
-			Sparql_Query = Sparql_Query + "?accident aircraftaccident:occurredAtCity aircraftaccident:" + City_var + " . "
-	}
-
-	if (RunSur_var != "")
-	{
-			Sparql_Query = Sparql_Query + "?accident aircraftaccident:hasRunwaySurfaceType aircraftaccident:" + RunSur_var + " . "
-
-	}
-
-	if (AircraftModel_var != "")
-	{
-			Sparql_Query = Sparql_Query + "?accident aircraftaccident:hasAircraftModel aircraftaccident:" + AircraftModel_var + " . "
+	var accident_number = new Array();
+	var out = "";
+	for (i = 0; i < result.bindings.length; i++) {
+		accident_number.push(result.bindings[i].accident.value.split("#")[1].split("_")[1]);
+		// out += result.bindings[i].accident.value.split("#")[1].split("_")[1] + "\n"; 
 	}
 
 
-Sparql_Query = Sparql_Query + " } "
-Sparql_Query = Prefix_1 + " " + Prefix_2 + " " + Sparql_Query
+	text = "<ul>";
+	for (i = 0; i < result.bindings.length; i++) {
+	  text += "<li>" + accident_number[i] + "</li>";
+	}
+	text += "</ul>";
 
-	// var total = City_var.value + RunSur_var.value + AircraftModel_var.value;
-	document.getElementById("query").innerHTML = Sparql_Query;
+	// stringg_abc
+	document.getElementById("resultTable").innerHTML = text;
+
+	alert(accident_number);
 }
 
 
-$('.ui.dropdown')
-  .dropdown()
-;
-
-function on_click () {
-	       city_data = JSON.parse(document.getElementById("City_ID").value.replace(/'/g, '"'));
-	       document.getElementById("query").innerHTML = "city_data"
-}
 </script>
 
 
 
-<h2>kNOWLEDGE GRAPH</h2>
-
-
-
-
-<form method="get">
-<br>
-Enter City:  
-<input type="text" id="City_ID" name="City">
-<br>
-Enter Runway Surface Type:  
-<input type="text" id="RunSur_ID" name="Runway_SUrface">
-<br>
-Enter Aircraft Model:  
-<input type="text" id="AircraftModel_ID" name="Aircraft_model">
-<br><br>
-<input type="submit" value="GENERATE" name="my_btn">
-</form>
-<p id="query">{{stringg}}</p>
 </body>
 </html>
